@@ -12,6 +12,7 @@ export class UsersService {
     try {
       const newUser = this.userRepository.create(createUserDto)
       await this.userRepository.save(newUser)
+
     }
     catch (error) {
       console.log(error)
@@ -37,7 +38,14 @@ export class UsersService {
     })
 
   }
-
+  async findByEmailWithPassword(email: string) {
+    return await this.userRepository.findOne({
+      where: {
+        email
+      },
+      select: { id: true, email: true, password: true, role: true }
+    })
+  }
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

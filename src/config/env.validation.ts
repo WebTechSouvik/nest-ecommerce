@@ -6,6 +6,11 @@ const validationSchema = zod.object({
     DB_PORT: zod.string(),
     DB_USERNAME: zod.string(),
     DB_PASSWORD: zod.string(),
-    DB_NAME: zod.string()
+    DB_NAME: zod.string(),
+    JWT_ACCESS_SECRET: zod.string(),
+    JWT_REFRESH_SECRET: zod.string(),
+    JWT_ACCESS_EXPAIRY: zod.string(),
+    JWT_REFRESH_EXPAIRY: zod.string(),
+
 });
 export default validationSchema;

@@ -11,13 +11,21 @@ import { AuthModule } from './auth/auth.module';
 import databaseConfig from './config/database.config';
 import validationSchema from './config/env.validation';
 import { ResponseInterceptor } from './common/interceptor/response.interceptor';
+import { JwtModule } from '@nestjs/jwt';
+import jwtConfig from './config/jwt.config';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-    load: [databaseConfig],
+    load: [databaseConfig, jwtConfig],
     validate: (env) => validationSchema.parse(env)
-  }), DatabaseModule, UsersModule, CartsModule, OrdersModule, ProductsModule, AuthModule,],
+  }), DatabaseModule, UsersModule, CartsModule, OrdersModule, ProductsModule, AuthModule, JwtModule.register({
+    global: true,
+    secret: process.env.JWT_SECRET || 'default',
+    signOptions: {
+      expiresIn: '60s'
+    }
+  })],
   controllers: [AppController],
   providers: [AppService, {
     provide: "APP_INTERCEPTOR",

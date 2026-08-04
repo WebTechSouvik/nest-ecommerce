@@ -8,9 +8,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp()
         const req = ctx.getRequest<Request>()
         const res = ctx.getResponse<Response>()
-        const message = exception.message
         const name = exception.name
         const statusCode = exception.getStatus()
+        const exceptioResponse = exception.getResponse()
+        const message = typeof exceptioResponse === 'string' ? exceptioResponse : exceptioResponse['message']
 
 
         res.status(statusCode).json({
