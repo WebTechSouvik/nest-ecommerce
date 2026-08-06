@@ -3,6 +3,7 @@ import type { ConfigType } from "@nestjs/config";
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from "passport-jwt";
 import jwtConfig from "src/config/jwt.config";
+import { JwtPayload } from "./interface/jwt-payload.interface";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -12,7 +13,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             secretOrKey: jwtConfigValue.access.secret
         })
     }
-    validate(payload: any): unknown {
-        return payload;
+    validate(payload: JwtPayload): unknown {
+        return {
+            id:payload.sub,
+            role:payload.role
+        };
     }
 }

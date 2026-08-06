@@ -1,9 +1,8 @@
-import { Body, Controller, Get, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { RegisterDto } from './dto/register.dto';
+import { Body, Controller, Post } from '@nestjs/common';
 import { SuccessMessage } from 'src/common/decorator/success-message.decorator';
+import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { JwtGuard } from './jwt.guard';
+import { RegisterDto } from './dto/register.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -24,11 +23,6 @@ export class AuthController {
     return await this.authService.login(user)
   }
 
-  @UseGuards(JwtGuard)
-  @Get('profile')
-  @SuccessMessage('User Profile Retrieved Successfully')
-  async getProfile() {
-    return;
-  }
+
 
 }
