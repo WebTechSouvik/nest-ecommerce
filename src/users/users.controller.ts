@@ -8,7 +8,6 @@ import { SuccessMessage } from 'src/common/decorator/success-message.decorator';
 import { JwtGuard } from 'src/common/guards/jwt-auth.guard';
 
 @Controller('users')
-@UseGuards(JwtGuard)
 
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
@@ -18,30 +17,15 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
-  }
+
 
   @Get('profile')
+  @UseGuards(JwtGuard)
   @SuccessMessage('user profile fetch succesfully')
   async findProfile(@CurrentUser('id') userId: string) {
     return await this.usersService.findOneById(userId)
 
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOneById(id);
-  }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
-  }
 }

@@ -31,7 +31,8 @@ export class Product {
     })
     stock!: number
     @Column({
-        type: 'simple-array'
+        type: 'simple-array',
+        nullable: true
     })
     images!: string[]
 
