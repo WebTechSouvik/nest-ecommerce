@@ -1,4 +1,4 @@
-import { User } from "src/users/entities/user.entity";
+import { User } from "../../../src/users/entities/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
 import { OrderStatus } from "../enum/order-status.enum";
 import { OrderItem } from "./order-item.entity";

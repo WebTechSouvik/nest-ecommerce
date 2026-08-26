@@ -1,8 +1,8 @@
 import { BeforeInsert, Column, Entity, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { UserRole } from "../enum/user-role.enum";
 import * as argon2 from "argon2";
-import { Order } from "src/orders/entities/order.entity";
-import { Cart } from "src/carts/entities/cart.entity";
+import { Order } from "../../../src/orders/entities/order.entity";
+import { Cart } from "../../../src/carts/entities/cart.entity";
 
 @Entity()
 export class User {

@@ -1,5 +1,5 @@
-import { CartItem } from "src/carts/entities/cart-item.entity";
-import { OrderItem } from "src/orders/entities/order-item.entity";
+import { CartItem } from "../../../src/carts/entities/cart-item.entity";
+import { OrderItem } from "../../../src/orders/entities/order-item.entity";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity()
