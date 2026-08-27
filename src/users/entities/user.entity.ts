@@ -3,6 +3,7 @@ import { UserRole } from "../enum/user-role.enum";
 import * as argon2 from "argon2";
 import { Order } from "../../../src/orders/entities/order.entity";
 import { Cart } from "../../../src/carts/entities/cart.entity";
+import { Review } from "src/reviews/entities/review.entity";
 
 @Entity()
 export class User {
@@ -43,6 +44,9 @@ export class User {
         default: UserRole.USER
     })
     role!: UserRole
+
+    @OneToMany(() => Review, (review) => review.user)
+    reviews!: Review[]
 
     @OneToMany(() => Order, (order) => order.customer)
     orders!: Order[]

@@ -13,13 +13,14 @@ import { DatabaseModule } from './database/database.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
     load: [databaseConfig, jwtConfig],
     validate: (env) => validationSchema.parse(env)
-  }), DatabaseModule, UsersModule, CartsModule, OrdersModule, ProductsModule, AuthModule],
+  }), DatabaseModule, UsersModule, CartsModule, OrdersModule, ProductsModule, AuthModule, ReviewsModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: "APP_INTERCEPTOR",

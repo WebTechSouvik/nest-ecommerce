@@ -1,3 +1,4 @@
+import { Review } from "src/reviews/entities/review.entity";
 import { CartItem } from "../../../src/carts/entities/cart-item.entity";
 import { OrderItem } from "../../../src/orders/entities/order-item.entity";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
@@ -35,6 +36,9 @@ export class Product {
         nullable: true
     })
     images!: string[]
+
+    @OneToMany(() => Review, (review) => review.product)
+    reviews!: Review[]
 
     @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
     orderItems!: OrderItem[]
