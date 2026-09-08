@@ -9,7 +9,6 @@ export class S3Service {
     private readonly s3Client: S3Client;
     private readonly bucketName: string;
     constructor(@Inject(awsConfig.KEY) private readonly awsCred: ConfigType<typeof awsConfig>) {
-        console.log({ awsCred })
         this.s3Client = new S3Client({
             region: awsCred.region,
             credentials: {
