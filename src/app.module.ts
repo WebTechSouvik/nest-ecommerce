@@ -14,11 +14,13 @@ import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { CommonModule } from './common/common.module';
+import awsConfig from './config/aws.config';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-    load: [databaseConfig, jwtConfig],
+    load: [databaseConfig, jwtConfig, awsConfig],
     validate: (env) => validationSchema.parse(env)
   }), DatabaseModule, UsersModule, CartsModule, OrdersModule, ProductsModule, AuthModule, ReviewsModule],
   controllers: [AppController],

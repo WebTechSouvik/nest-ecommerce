@@ -6,6 +6,7 @@ import type { Request } from 'express';
 import { CurrentUser } from 'src/common/decorator/current-user.decorator';
 import { SuccessMessage } from 'src/common/decorator/success-message.decorator';
 import { JwtGuard } from 'src/common/guards/jwt-auth.guard';
+import { UploadAvtarDto } from './dto/upload-avatar.dto';
 
 @Controller('users')
 
@@ -18,6 +19,10 @@ export class UsersController {
   }
 
 
+  @Post('avatar/upload-url')
+  async uploadAvatar(@Body() uploadAvtarDto: UploadAvtarDto) {
+    return await this.usersService.generateSignedUrlForUploadAvatar(uploadAvtarDto)
+  }
 
   @Get('profile')
   @UseGuards(JwtGuard)

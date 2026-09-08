@@ -11,6 +11,10 @@ const validationSchema = zod.object({
     JWT_REFRESH_SECRET: zod.string(),
     JWT_ACCESS_EXPAIRY: zod.string(),
     JWT_REFRESH_EXPAIRY: zod.string(),
+    AWS_ACCESS_KEY_ID: zod.string(),
+    AWS_SECRET_ACCESS_KEY: zod.string(),
+    AWS_REGION: zod.string(),
+    AWS_BUCKET_NAME: zod.string()
 
 });
 export default validationSchema;

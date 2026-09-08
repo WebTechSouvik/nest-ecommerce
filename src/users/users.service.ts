@@ -4,10 +4,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { S3Service } from 'src/common/service/s3.service';
+import { UploadAvtarDto } from './dto/upload-avatar.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private userRepository: Repository<User>) { }
+  constructor(@InjectRepository(User) private userRepository: Repository<User>, private readonly s3Service: S3Service) { }
   async create(createUserDto: CreateUserDto) {
     try {
       const newUser = this.userRepository.create(createUserDto)
@@ -56,5 +58,16 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async generateSignedUrlForUploadAvatar(uploadAvtarDto: UploadAvtarDto) {
+    const { contentType, fileName } = uploadAvtarDto
+    const [name, extension] = fileName.split(".")
+    const key = `avatars/${crypto.randomUUID()}-${name}.${extension}`
+    const signedUrl = await this.s3Service.getPreSignedUrlForUploadObject(key, contentType)
+    return {
+      uploadUr: signedUrl,
+      key
+    }
   }
 }
