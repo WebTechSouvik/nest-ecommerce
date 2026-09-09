@@ -7,6 +7,7 @@ import { CurrentUser } from 'src/common/decorator/current-user.decorator';
 import { SuccessMessage } from 'src/common/decorator/success-message.decorator';
 import { JwtGuard } from 'src/common/guards/jwt-auth.guard';
 import { UploadAvtarDto } from './dto/upload-avatar.dto';
+import { AvatarFinalizeDto } from './dto/avatar-finalize.dto';
 
 @Controller('users')
 
@@ -19,9 +20,18 @@ export class UsersController {
   }
 
 
+  @UseGuards(JwtGuard)
   @Post('avatar/upload-url')
-  async uploadAvatar(@Body() uploadAvtarDto: UploadAvtarDto) {
-    return await this.usersService.generateSignedUrlForUploadAvatar(uploadAvtarDto)
+  async uploadAvatar(@Body() uploadAvtarDto: UploadAvtarDto, @CurrentUser('id') userId: string) {
+    return await this.usersService.generateSignedUrlForUploadAvatar(uploadAvtarDto, userId)
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('avatar/finalize')
+  @SuccessMessage('user avatar finalized sucessfully')
+  avatarFinalize(@Body() avatarFinalizeDto: AvatarFinalizeDto, @CurrentUser('id') userId: string) {
+    return this.usersService.uploadAvatarFInalize(avatarFinalizeDto, userId)
+
   }
 
   @Get('profile')
