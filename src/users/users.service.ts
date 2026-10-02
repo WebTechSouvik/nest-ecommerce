@@ -81,11 +81,14 @@ export class UsersService {
   async uploadAvatarFInalize(avatarFinalizeDto: AvatarFinalizeDto, userId: string) {
 
     const key = this.generateFileNameKey(userId, avatarFinalizeDto.fileName)
+    const currentUser = await this.userRepository.findOneBy({ id: userId })
+    const oldKey = currentUser?.avatarKey
 
     await this.userRepository.update({
       id: userId
     }, { avatarKey: key },)
 
+    await this.s3Service.deleteObject(oldKey!)
 
 
   }
