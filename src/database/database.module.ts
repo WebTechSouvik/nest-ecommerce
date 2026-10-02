@@ -6,10 +6,7 @@ import databaseConfig from 'src/config/database.config';
 @Module({
     imports: [TypeOrmModule.forRootAsync({
         inject: [databaseConfig.KEY],
-        useFactory: (dbConfig: ConfigType<typeof databaseConfig>) => {
-            
-            console.log({dbConfig})
-            return({
+        useFactory: (dbConfig: ConfigType<typeof databaseConfig>) => ({
             type: 'postgres',
             port: dbConfig.port || 5432,
             host: dbConfig.host || 'localhost',
@@ -17,8 +14,11 @@ import databaseConfig from 'src/config/database.config';
             password: dbConfig.password || 'password',
             database: dbConfig.database || 'postgres',
             autoLoadEntities: true,
-            synchronize: true
-        })}
+            synchronize: true,
+            ssl: {
+                rejectUnauthorized: false
+            }
+        })
     })]
 })
 export class DatabaseModule { }
